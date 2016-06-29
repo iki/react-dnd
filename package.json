@@ -4,10 +4,10 @@
   "description": "Drag and Drop for React",
   "main": "lib/index.js",
   "scripts": {
-    "start": "./scripts/startSiteDevServer.sh",
-    "build-site": "./scripts/buildStaticSite.sh",
-    "publish-site": "./scripts/publishStaticSite.sh",
-    "build": "./scripts/build.sh",
+    "start": "sh ./scripts/startSiteDevServer.sh",
+    "build-site": "sh ./scripts/buildStaticSite.sh",
+    "publish-site": "sh ./scripts/publishStaticSite.sh",
+    "build": "sh ./scripts/build.sh",
     "lint": "eslint .",
     "test": "karma start",
     "prepublish": "npm run lint && npm run build"
