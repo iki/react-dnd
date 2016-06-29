@@ -12,7 +12,27 @@ export default function createSourceConnector(backend) {
   let currentDragPreviewOptions;
   let disconnectCurrentDragPreview;
 
+  function log(msg, data) {
+    const id = data && (data.id2 || data.id)  || currentHandlerId;
+
+    console.debug('dnd: ' + msg + (id ? ' [' + id + ']' : ''), Object.assign({
+      id,
+      source: currentDragSourceNode,
+      sourceOptions: currentDragSourceOptions,
+      sourceDisconnect: disconnectCurrentDragSource,
+      sourceDisconnectId: disconnectCurrentDragSource && disconnectCurrentDragSource.sourceId,
+      preview: currentDragPreviewNode,
+      previewOptions: currentDragPreviewOptions,
+      previewDisconnect: disconnectCurrentDragPreview,
+      previewDisconnectId: disconnectCurrentDragPreview && disconnectCurrentDragPreview.sourceId,
+      backend
+    }, data));
+
+  }
+
   function reconnectDragSource() {
+    log('source reconnect');
+
     if (disconnectCurrentDragSource) {
       disconnectCurrentDragSource();
       disconnectCurrentDragSource = null;
@@ -28,6 +48,8 @@ export default function createSourceConnector(backend) {
   }
 
   function reconnectDragPreview() {
+    log('preview reconnect');
+
     if (disconnectCurrentDragPreview) {
       disconnectCurrentDragPreview();
       disconnectCurrentDragPreview = null;
@@ -47,6 +69,8 @@ export default function createSourceConnector(backend) {
       return;
     }
 
+    log('update', {id2: handlerId});
+
     currentHandlerId = handlerId;
     reconnectDragSource();
     reconnectDragPreview();
@@ -61,6 +85,8 @@ export default function createSourceConnector(backend) {
         return;
       }
 
+      log('source connect', {source2: node, sourceOptions2: options});
+
       currentDragSourceNode = node;
       currentDragSourceOptions = options;
 
@@ -74,6 +100,8 @@ export default function createSourceConnector(backend) {
       ) {
         return;
       }
+
+      log('preview connect', {preview2: node, previewOptions2: options});
 
       currentDragPreviewNode = node;
       currentDragPreviewOptions = options;
