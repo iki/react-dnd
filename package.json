@@ -8,6 +8,10 @@
     "build-site": "sh ./scripts/buildStaticSite.sh",
     "publish-site": "sh ./scripts/publishStaticSite.sh",
     "build": "sh ./scripts/build.sh",
+    "build:lib": "babel src --out-dir lib",
+    "watch:lib": "babel src --out-dir lib -w",
+    "build:umd": "webpack",
+    "watch:umd": "webpack -w",
     "lint": "eslint .",
     "test": "karma start",
     "prepublish": "npm run lint && npm run build"
